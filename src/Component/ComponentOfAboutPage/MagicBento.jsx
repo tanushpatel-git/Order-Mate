@@ -11,37 +11,43 @@ const cardData = [
         color: '#060010',
         title: 'Analytics',
         description: 'Track user behavior',
-        label: 'Insights'
+        label: 'Insights',
+        img:"https://w0.peakpx.com/wallpaper/367/299/HD-wallpaper-cartoon-black-legend-theme.jpg"
     },
     {
         color: '#060010',
         title: 'Dashboard',
         description: 'Centralized data view',
-        label: 'Overview'
+        label: 'Overview',
+        img:'https://images.pond5.com/5-white-cartoon-electricity-elements-footage-091693013_iconl.jpeg'
     },
     {
         color: '#060010',
         title: 'Collaboration',
         description: 'Work together seamlessly',
-        label: 'Teamwork'
+        label: 'Teamwork',
+        img:'https://t4.ftcdn.net/jpg/09/17/71/31/360_F_917713196_RqTwaiMAeB9EGTlKJLILmn2JjimAIh1S.jpg'
     },
     {
         color: '#060010',
         title: 'Automation',
         description: 'Streamline workflows',
-        label: 'Efficiency'
+        label: 'Efficiency',
+        img:'https://images.vexels.com/media/users/3/192896/isolated/preview/27b253356169e0b77b4be3f8118952fc-sleeping-panda-stroke.png'
     },
     {
         color: '#060010',
         title: 'Integration',
         description: 'Connect favorite tools',
-        label: 'Connectivity'
+        label: 'Connectivity',
+        img:'https://i.pinimg.com/736x/81/1d/16/811d163aa916681d75251f14c8341d18.jpg'
     },
     {
         color: '#060010',
         title: 'Security',
         description: 'Enterprise-grade protection',
-        label: 'Protection'
+        label: 'Protection',
+        img:'https://images.vexels.com/media/users/3/270929/isolated/preview/e27160b165a667e2514d210d82597206-cute-cartoon-reaper-cutout.png'
     }
 ];
 
@@ -660,6 +666,7 @@ const MagicBento = ({
                                     clickEffect={clickEffect}
                                     enableMagnetism={enableMagnetism}
                                 >
+                                    <img src={card.img} alt="error" className="absolute top-0 left-0 transition-all w-full h-full object-cover -z-1"/>
                                     <div className="card__header flex justify-between gap-3 relative text-white">
                                         <span className="card__label text-base">{card.label}</span>
                                     </div>
@@ -792,6 +799,7 @@ const MagicBento = ({
                                     el.addEventListener('click', handleClick);
                                 }}
                             >
+                                <img src={card.img} alt="error" className="absolute top-0 transition-all left-0 w-full h-full object-cover -z-1"/>
                                 <div className="card__header flex justify-between gap-3 relative text-white">
                                     <span className="card__label text-base">{card.label}</span>
                                 </div>
