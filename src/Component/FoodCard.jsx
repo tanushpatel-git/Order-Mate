@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {toast,ToastContainer} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
-const foods = [{
+const foods = [
+    {
     "id": "bo-ssam-dinner-for-4-6",
     "img": "https://goldbelly.imgix.net/uploads/showcase_media_asset/image/110906/bo-ssam-dinner-for-4.c4a32e8801e2f0283e0565bbe8493149.jpg?ixlib=react-9.0.2&auto=format&ar=1%3A1",
     "name": "Momofuku",
@@ -486,7 +488,7 @@ const foods = [{
 export default function FoodCards() {
     let orderData = JSON.parse(localStorage.getItem('orderData')) || [] ;
     let loginData = JSON.parse(localStorage.getItem('LoginData')) || null;
-
+    const navigate = useNavigate()
     const handleOrderData = (data) => {
         if (loginData){
             orderData.push(data);
@@ -496,6 +498,19 @@ export default function FoodCards() {
             toast.error("You have to login first");
         }
     }
+
+    useEffect(() => {
+        let timeActivity = null;
+        if (!loginData) {
+            timeActivity = setTimeout(()=>{
+                navigate("/login");
+                toast.warn("You are not logged in Please Login.");
+            },5000)
+        }
+        return () => {
+            clearTimeout(timeActivity);
+        }
+    },[])
      return (<div
         className="min-h-screen bg-gradient-to-br absolute top-0 left-0 w-full from-orange-200 via-yellow-100 to-red-200 p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
         {foods.map((food, index) => (<div

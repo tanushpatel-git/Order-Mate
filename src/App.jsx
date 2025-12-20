@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter,Route,Routes,Link} from 'react-router-dom'
+import {Route, Routes, Link} from 'react-router-dom'
 import Home from "./Pages/Home.jsx";
 import Login from "./Pages/Login.jsx";
 import SignUp from "./Pages/SignUp.jsx";
@@ -8,12 +8,16 @@ import KitchenProcess from "./Pages/KitchenProcess.jsx";
 import ErrorPage from "./Pages/ErrorPage.jsx";
 import OrderBoard from "./Pages/OrderBoard.jsx";
 import NavBar from "./Component/NavBar.jsx";
+import {ToastContainer} from 'react-toastify'
+import InCaseOfLogin from "./Pages/InCaseOfLogin.jsx";
 
 
 
 const App = () => {
+
     return (
-        <BrowserRouter>
+        <>
+            <ToastContainer/>
             <NavBar
                 logo={<span style={{ fontWeight: 900 , fontSize:"23px" }}><Link to="/">OrderMate</Link></span>}
                 menuAriaLabel="Toggle navigation"
@@ -32,8 +36,9 @@ const App = () => {
                 <Route path="/KitchenProcess" element={<KitchenProcess />} />
                 <Route path="*" element={<ErrorPage />} />
                 <Route path="/OrderBoard" element={<OrderBoard />} />
+                <Route path="/InCaseOfLogin" element={<InCaseOfLogin />} />
             </Routes>
-        </BrowserRouter>
+        </>
     )
 }
 export default App

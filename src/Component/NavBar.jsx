@@ -3,58 +3,72 @@ import {Link} from 'react-router-dom'
 
 import {gsap} from 'gsap';
 
-const DEFAULT_ITEMS = [{
-    label: 'Home', href: '/', ariaLabel: 'Home', rotation: -8, hoverStyles: {bgColor: '#3b82f6', textColor: '#ffffff'}
-}, {
-    label: 'About',
-    href: '/About',
-    ariaLabel: 'About',
-    rotation: 8,
-    hoverStyles: {bgColor: '#10b981', textColor: '#ffffff'}
-}, {
-    label: 'KitchenProcess',
-    href: '/KitchenProcess',
-    ariaLabel: 'Documentation',
-    rotation: 8,
-    hoverStyles: {bgColor: '#f59e0b', textColor: '#ffffff'}
-}, {
-    label: 'Login',
-    href: '/Login',
-    ariaLabel: 'Blog',
-    rotation: 8,
-    hoverStyles: {bgColor: '#ef4444', textColor: '#ffffff'}
-}, {
-    label: 'OrderBoard',
-    href: '/OrderBoard',
-    ariaLabel: 'Contact',
-    rotation: -8,
-    hoverStyles: {bgColor: '#8b5cf6', textColor: '#ffffff'}
-}];
-
 export default function NavBar({
-                                       logo,
-                                       onMenuClick,
-                                       className,
-                                       style,
-                                       menuAriaLabel = 'Toggle menu',
-                                       menuBg = '#00000',
-                                       menuContentColor = '#111',
-                                       useFixedPosition = false,
-                                       items,
-                                       animationEase = 'back.out(1.5)',
-                                       animationDuration = 0.5,
-                                       staggerDelay = 0.12
-                                   }) {
+                                   logo,
+                                   onMenuClick,
+                                   className,
+                                   style,
+                                   menuAriaLabel = 'Toggle menu',
+                                   menuBg = '#00000',
+                                   menuContentColor = '#111',
+                                   useFixedPosition = false,
+                                   items,
+                                   animationEase = 'back.out(1.5)',
+                                   animationDuration = 0.5,
+                                   staggerDelay = 0.12
+                               }) {
+
+    const [loginInfo, setLoginInfo] = useState(false);
+
+    useEffect(() => {
+        let login = JSON.parse(localStorage.getItem('LoginData')) || null;
+        if (login) {
+            setLoginInfo(true);
+        }else{
+            setLoginInfo(false);
+        }
+    })
+
+
+    const DEFAULT_ITEMS = [{
+        label: 'Home', href: '/', ariaLabel: 'Home', rotation: -8, hoverStyles: {bgColor: '#3b82f6', textColor: '#ffffff'}
+    }, {
+        label: 'About',
+        href: '/About',
+        ariaLabel: 'About',
+        rotation: 8,
+        hoverStyles: {bgColor: '#10b981', textColor: '#ffffff'}
+    }, {
+        label: 'KitchenProcess',
+        href: '/KitchenProcess',
+        ariaLabel: 'Documentation',
+        rotation: 8,
+        hoverStyles: {bgColor: '#f59e0b', textColor: '#ffffff'}
+    }, {
+        label: 'Login',
+        href: `${loginInfo?'/InCaseOfLogin':'/Login'}`,
+        ariaLabel: 'Blog',
+        rotation: 8,
+        hoverStyles: {bgColor: '#ef4444', textColor: '#ffffff'}
+    }, {
+        label: 'OrderBoard',
+        href: '/OrderBoard',
+        ariaLabel: 'Contact',
+        rotation: -8,
+        hoverStyles: {bgColor: '#8b5cf6', textColor: '#ffffff'}
+    },];
+
+
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showOverlay, setShowOverlay] = useState(false);
-
     const overlayRef = useRef(null);
     const bubblesRef = useRef([]);
     const labelRefs = useRef([]);
 
     const menuItems = items?.length ? items : DEFAULT_ITEMS;
 
-    const containerClassName = ['bubble-menu', useFixedPosition ? 'fixed' : 'fixed', 'left-18 top-3','bg-[#4A70A9]','w-[90vw] h-[10vh] rounded-4xl', 'flex items-center justify-between', 'gap-4 px-8 mt-5', 'pointer-events-none', 'z-[1001]', className]
+    const containerClassName = ['bubble-menu', useFixedPosition ? 'fixed' : 'fixed', 'left-18 top-3', 'bg-[#4A70A9]', 'w-[90vw] h-[10vh] rounded-4xl', 'flex items-center justify-between', 'gap-4 px-8 mt-5', 'pointer-events-none', 'z-[1001]', className]
         .filter(Boolean)
         .join(' ');
 
@@ -194,7 +208,7 @@ export default function NavBar({
                                               className="bubble-logo max-h-[60%] max-w-full object-contain block"/>) : (logo)}
           </span>
             </div>
-
+            <div className="flex justify-center items-center gap-2">
             <button
                 type="button"
                 className={['bubble toggle-bubble menu-btn', isMenuOpen ? 'open' : '', 'inline-flex flex-col items-center justify-center', 'rounded-full', 'bg-white', 'shadow-[0_4px_16px_rgba(0,0,0,0.12)]', 'pointer-events-auto', 'w-12 h-12 md:w-14 md:h-14', 'border-0 cursor-pointer p-0', 'will-change-transform'].join(' ')}
@@ -223,6 +237,7 @@ export default function NavBar({
                     }}
                 />
             </button>
+            </div>
         </nav>
 
         {showOverlay && (<div
@@ -241,7 +256,9 @@ export default function NavBar({
                     className={['pill-col', 'flex justify-center items-stretch', '[flex:0_0_calc(100%/3)]', 'box-border'].join(' ')}
                 >
                     <Link
-                        onClick={()=>{setIsMenuOpen(false)}}
+                        onClick={() => {
+                            setIsMenuOpen(false)
+                        }}
                         role="menuitem"
                         to={item.href}
                         aria-label={item.ariaLabel || item.label}
@@ -278,7 +295,8 @@ export default function NavBar({
                     {item.label}
                   </span>
                     </Link>
-                </li>))}
+                </li>
+                ))}
             </ul>
         </div>)}
     </>);

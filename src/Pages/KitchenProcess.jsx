@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from "react";
 import OrderCard from "../Component/OrderCard.jsx";
 import {toast,ToastContainer} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 export default function KitchenProcess() {
+    const navigate = useNavigate();
     const dotDesign = "scale-110 border-2 border-white border-dotted";
     const [orderItems, setOrderItems] = useState([]);
     const [progressItems, setProgressItems] = useState([]);
@@ -13,6 +15,19 @@ export default function KitchenProcess() {
     let orderData = JSON.parse(localStorage.getItem("orderData")) || [];
     let doneData = JSON.parse(localStorage.getItem("doneData")) || [];
     const [dragItem, setDragItem] = useState(null);
+    useEffect(() => {
+        const loginData = JSON.parse(localStorage.getItem("LoginData")) || null;
+        let timeActivity = null;
+        if (!loginData) {
+            timeActivity = setTimeout(() => {
+                navigate("/login");
+                toast.warn("You are not logged in! please login");
+            },5000)
+        }
+        return () => {
+            clearTimeout(timeActivity);
+        }
+    },[])
     const handleDrag = () => {
         setSelected(true)
     }

@@ -117,7 +117,7 @@ const About = () => {
                     <div style={{ height: '1000px', position: 'relative' ,width: '100%' }}>
                         <ChromaGrid
                             items={items}
-                            radius={100}
+                            radius={200}
                             damping={0.45}
                             fadeOut={0.6}
                             ease="power3.out"

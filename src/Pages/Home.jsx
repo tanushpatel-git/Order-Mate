@@ -1,18 +1,35 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import CardSwap, {Card} from '../Component/CardSwap.jsx'
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
+
 
 const Home = () => {
     const navigate = useNavigate();
 
+    const loginData = JSON.parse(localStorage.getItem("LoginData")) || null;
+    useEffect(() => {
+        let timeActivity = null;
+        if (!loginData) {
+            timeActivity = setTimeout(()=>{
+                navigate("/login");
+                toast.warn("You are not logged in Please Login.");
+            },5000)
+        }
+        return () => {
+            clearTimeout(timeActivity)
+        }
+    },[])
+
     const handleClick = () => {
-        let loginData = JSON.parse(localStorage.getItem("LoginData")) || null;
         if (loginData) {
             navigate("/OrderBoard");
         }else{
             navigate("/login");
         }
     }
+
+
 
     return (<main className="bg-black h-screen w-full overflow-hidden absolute top-0 left-0">
         <div className="relative top-30 flex items-center">
