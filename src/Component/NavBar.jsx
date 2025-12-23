@@ -18,6 +18,7 @@ export default function NavBar({
                                    staggerDelay = 0.12
                                }) {
 
+
     const [loginInfo, setLoginInfo] = useState(false);
 
     useEffect(() => {

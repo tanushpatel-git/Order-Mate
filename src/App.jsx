@@ -10,6 +10,8 @@ import OrderBoard from "./Pages/OrderBoard.jsx";
 import NavBar from "./Component/NavBar.jsx";
 import {ToastContainer} from 'react-toastify'
 import InCaseOfLogin from "./Pages/InCaseOfLogin.jsx";
+import AuthenticationErrorPage from "./Pages/AuthenticationErrorPage.jsx";
+import ProtectedRoute from "./Pages/ProtectedRoute.jsx";
 
 
 
@@ -33,9 +35,9 @@ const App = () => {
                 <Route path="/Login" element={<Login />} />
                 <Route path="/SignUp" element={<SignUp/>} />
                 <Route path="/About" element={<About />} />
-                <Route path="/KitchenProcess" element={<KitchenProcess />} />
+                <Route path="/KitchenProcess" element={<ProtectedRoute><KitchenProcess /></ProtectedRoute>} />
                 <Route path="*" element={<ErrorPage />} />
-                <Route path="/OrderBoard" element={<OrderBoard />} />
+                <Route path="/OrderBoard" element={<ProtectedRoute><OrderBoard/></ProtectedRoute>} />
                 <Route path="/InCaseOfLogin" element={<InCaseOfLogin />} />
             </Routes>
         </>
