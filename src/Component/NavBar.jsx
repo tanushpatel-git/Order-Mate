@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 import {gsap} from 'gsap';
 
@@ -18,17 +18,15 @@ export default function NavBar({
                                    staggerDelay = 0.12
                                }) {
 
+    const navigate = useNavigate();
 
-    const [loginInfo, setLoginInfo] = useState(false);
+    let loginInfo = JSON.parse(localStorage.getItem('LoginData'));
 
-    useEffect(() => {
-        let login = JSON.parse(localStorage.getItem('LoginData')) || null;
-        if (login) {
-            setLoginInfo(true);
-        }else{
-            setLoginInfo(false);
-        }
-    })
+    const handleLogout = () => {
+        console.log("Clicked")
+        localStorage.removeItem('LoginData');
+        navigate('/Login');
+    }
 
 
     const DEFAULT_ITEMS = [{
@@ -47,8 +45,8 @@ export default function NavBar({
         hoverStyles: {bgColor: '#f59e0b', textColor: '#ffffff'}
     }, {
         label: 'Login',
-        href: `${loginInfo?'/InCaseOfLogin':'/Login'}`,
-        ariaLabel: 'Blog',
+        href: loginInfo?'/InCaseOfLogin':'/Login',
+        ariaLabel: 'Login',
         rotation: 8,
         hoverStyles: {bgColor: '#ef4444', textColor: '#ffffff'}
     }, {
@@ -238,6 +236,11 @@ export default function NavBar({
                     }}
                 />
             </button>
+                {loginInfo && <button
+                    onClick={handleLogout}
+                    className="rounded-4xl bg-red-600 text-white p-2 pointer-events-auto">
+                    LogOut
+                </button>}
             </div>
         </nav>
 
